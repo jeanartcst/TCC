@@ -15,13 +15,30 @@ model User {
   name      String
   last_name String
   email     String @unique
-  cnpj_cpf  Int    @unique
+  cnpj_cpf  String @unique
 
   password String
 
-  address_id             Int
-  contact_information_id Int      @unique
+  address_id Int
+  address    Address @relation(fields: [address_id], references: [id])
+
+  contact_information_id Int
   created_at             DateTime @default(now())
 
   @@map("users")
+}
+
+model Address {
+  id            Int     @id @default(autoincrement())
+  street_avenue String?
+  house_number  String?
+  complement    String?
+  neighbor_name String?
+  city          String
+  state         String
+  zip_code      Int
+  country       String
+  User          User[]
+
+  @@map("addresses")
 }
