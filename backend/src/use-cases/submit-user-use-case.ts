@@ -1,4 +1,3 @@
-import { AddressRepository } from "./../repositories/address-repository";
 import { UserRepository } from "../repositories/user-repository";
 
 interface SubmitUserUseCaseRequest {
@@ -20,10 +19,7 @@ interface SubmitUserUseCaseRequest {
 }
 
 export class SubmitUserUseCase {
-  constructor(
-    private userRepository: UserRepository,
-    private addressRepository: AddressRepository
-  ) {}
+  constructor(private userRepository: UserRepository) {}
 
   async execute(request: SubmitUserUseCaseRequest) {
     const {
@@ -49,28 +45,15 @@ export class SubmitUserUseCase {
       );
     }
 
-    const address_id = await this.addressRepository.create({
-      city,
-      complement,
-      neighbor_name,
-      country,
-      zip_code,
-      house_number,
-      state,
-      street_avenue,
-    });
-
-    console.log(address_id);
-
-    await this.userRepository.create({
-      name,
-      email,
-      last_name,
-      cnpj_cpf,
-      password,
-      address_id,
-      contact_information_id,
-    });
+    // await this.userRepository.create({
+    //   name,
+    //   email,
+    //   last_name,
+    //   cnpj_cpf,
+    //   password,
+    //   address_id,
+    //   contact_information_id,
+    // });
   }
 
   async read(id: number) {
@@ -79,9 +62,9 @@ export class SubmitUserUseCase {
     if (!user) {
       throw new Error("User not found!");
     }
-    const addressData = await this.addressRepository.read(user.address_id);
+    // const addressData = await this.addressRepository.read(user.address_id);
 
-    return [user, addressData];
+    return user;
   }
 
   async updateUser(id: number, request: SubmitUserUseCaseRequest) {
@@ -108,26 +91,26 @@ export class SubmitUserUseCase {
       zip_code,
     } = request;
 
-    await this.addressRepository.update(user.address_id, {
-      city,
-      complement,
-      country,
-      house_number,
-      neighbor_name,
-      state,
-      street_avenue,
-      zip_code,
-    });
+    // await this.addressRepository.update(user.address_id, {
+    //   city,
+    //   complement,
+    //   country,
+    //   house_number,
+    //   neighbor_name,
+    //   state,
+    //   street_avenue,
+    //   zip_code,
+    // });
 
-    await this.userRepository.update(id, {
-      address_id: user.address_id,
-      cnpj_cpf,
-      password,
-      contact_information_id,
-      email,
-      last_name,
-      name,
-    });
+    // await this.userRepository.update(id, {
+    //   address_id: user.address_id,
+    //   cnpj_cpf,
+    //   password,
+    //   contact_information_id,
+    //   email,
+    //   last_name,
+    //   name,
+    // });
   }
 
   async deleteUser(id: number) {
@@ -136,7 +119,7 @@ export class SubmitUserUseCase {
     if (!userData) {
       throw new Error(`User not found: ${id}`);
     }
-    await this.addressRepository.delete(userData.address_id);
+    // await this.addressRepository.delete(userData.address_id);
     await this.userRepository.delete(id);
   }
 }

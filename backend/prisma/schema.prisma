@@ -23,7 +23,12 @@ model User {
   address    Address @relation(fields: [address_id], references: [id])
 
   contact_information_id Int
-  created_at             DateTime @default(now())
+  contact                ContactData @relation(fields: [contact_information_id], references: [id])
+
+  student_id Int?
+
+  created_at         DateTime            @default(now())
+  StudentInformation StudentInformation? @relation(fields: [student_id], references: [id])
 
   @@map("users")
 }
@@ -41,4 +46,29 @@ model Address {
   User          User[]
 
   @@map("addresses")
+}
+
+model ContactData {
+  id Int @id @default(autoincrement())
+
+  phone String
+  User  User[]
+
+  @@map("contacts")
+}
+
+model StudentInformation {
+  id Int @id @default(autoincrement())
+
+  current_course  Int
+  course          Courses  @relation(fields: [current_course], references: [id])
+  enrollment_data DateTime
+  User            User[]
+}
+
+model Courses {
+  id Int @id @default(autoincrement())
+
+  course_name        String
+  StudentInformation StudentInformation[]
 }
