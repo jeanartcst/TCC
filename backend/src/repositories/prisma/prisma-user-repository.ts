@@ -77,6 +77,18 @@ export class PrismaUserRepository implements UserRepository {
       throw new Error("User not found, try again ");
     }
 
+    // if (
+    //   user.cnpj_cpf.length == 14 &&
+    //   user.StudentInformation?.course.course_name == null
+    // ) {
+    //   user.StudentInformation.course.course_name =
+    //     "favor preencher as informações do curso";
+    // }
+
+    if (user.StudentInformation == undefined && user.cnpj_cpf.length == 11) {
+      throw new Error("user not found, try again");
+    }
+
     const transformedUser = {
       name: user.name,
       last_name: user.last_name,
@@ -103,8 +115,6 @@ export class PrismaUserRepository implements UserRepository {
     if (transformedUser.enrollment_data == undefined) {
       transformedUser.enrollment_data = new Date();
     }
-
-    console.log(transformedUser);
 
     return transformedUser;
   }

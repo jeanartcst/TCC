@@ -25,10 +25,10 @@ model User {
   contact_information_id Int
   contact                ContactData @relation(fields: [contact_information_id], references: [id])
 
-  student_id Int?
+  student_id Int
 
-  created_at         DateTime            @default(now())
-  StudentInformation StudentInformation? @relation(fields: [student_id], references: [id])
+  created_at         DateTime           @default(now())
+  StudentInformation StudentInformation @relation(fields: [student_id], references: [id])
 
   @@map("users")
 }
