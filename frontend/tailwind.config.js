@@ -8,11 +8,5 @@ export default {
       },
     },
   },
-  plugins: [
-    // ...
-    // require("@tailwind/tailwind-scrollbar"),
-  ],
-  variants: {
-    scrollbar: ["rounded"],
-  },
+  plugins: [],
 };

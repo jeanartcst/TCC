@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Forms } from "../components/Forms";
 
@@ -41,28 +41,40 @@ export function CadastrarUsuario() {
       nome_curso: "string",
       data_matricula: "string",
     },
+    {
+      nome: "123",
+      ultimo_nome: "pedro",
+      email: "string",
+      cnpj_cpf: "string",
+      senha: "string",
+      rua_avenida: "string",
+      numero_casa: "string",
+      complemento: "string",
+      bairro: "string",
+      cidade: "string",
+      estado: "string",
+      pais: "string",
+      codigo_postal: "string",
+      nome_curso: "string",
+      data_matricula: "string",
+    },
   ];
 
-  setUsuarios(data);
-  console.log(usuarios.length);
+  useEffect(() => {
+    setUsuarios(data);
+  }, []);
+
+  // usuarios.map((usuario) => {
+  //   console.log(usuario);
+  // });
   return (
     <>
       <Header />
-      <div className="flex p-2 w-full h-screen">
-        <div>
-          <p>teste</p>
-        </div>
-        {usuarios.map((usuario) => {
-          return (
-            <div key={usuario.nome}>
-              <div className="w-4 h-4 bg-green-800">
-                <p>teste</p>
-                <Forms x={2} />
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {usuarios.map((usuario) => {
+        <div key={usuario.cnpj_cpf}>
+          return <Forms />;
+        </div>;
+      })}
     </>
   );
 }
